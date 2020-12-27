@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springboot.mapper.DeptMapper">
+  <resultMap id="BaseResultMap" type="com.springboot.entity.Dept">
+    <id column="d_no" jdbcType="INTEGER" property="dNo" />
+    <result column="d_name" jdbcType="VARCHAR" property="dName" />
+    <result column="d_parent" jdbcType="VARCHAR" property="dParent" />
+    <result column="d_condition" jdbcType="INTEGER" property="dCondition" />
+    <result column="d_note" jdbcType="VARCHAR" property="dNote" />
+    <result column="d_principal" jdbcType="VARCHAR" property="dPrincipal" />
+    <result column="d_tel" jdbcType="VARCHAR" property="dTel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    d_no, d_name, d_parent, d_condition, d_note, d_principal, d_tel
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_dept
+    where d_no = #{dNo,jdbcType=INTEGER}
+  </select>
+  <select id="queryAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_dept
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_dept
+    where d_no = #{dNo,jdbcType=INTEGER}
+  </delete>
+    <delete id="del">
+      delete from t_dept
+      where d_no in 
+      <foreach item="arr" collection="array" index="no" open="(" separator="," close=")">
+        #{arr}
+      </foreach>
+    </delete>
+    <insert id="insert" parameterType="com.springboot.entity.Dept">
+    insert into t_dept (d_no, d_name, d_parent, 
+      d_condition, d_note, d_principal, 
+      d_tel)
+    values (#{dNo,jdbcType=INTEGER}, #{dName,jdbcType=VARCHAR}, #{dParent,jdbcType=VARCHAR}, 
+      #{dCondition,jdbcType=INTEGER}, #{dNote,jdbcType=VARCHAR}, #{dPrincipal,jdbcType=VARCHAR}, 
+      #{dTel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.springboot.entity.Dept">
+    insert into t_dept
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dNo != null">
+        d_no,
+      </if>
+      <if test="dName != null">
+        d_name,
+      </if>
+      <if test="dParent != null">
+        d_parent,
+      </if>
+      <if test="dCondition != null">
+        d_condition,
+      </if>
+      <if test="dNote != null">
+        d_note,
+      </if>
+      <if test="dPrincipal != null">
+        d_principal,
+      </if>
+      <if test="dTel != null">
+        d_tel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dNo != null">
+        #{dNo,jdbcType=INTEGER},
+      </if>
+      <if test="dName != null">
+        #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dParent != null">
+        #{dParent,jdbcType=VARCHAR},
+      </if>
+      <if test="dCondition != null">
+        #{dCondition,jdbcType=INTEGER},
+      </if>
+      <if test="dNote != null">
+        #{dNote,jdbcType=VARCHAR},
+      </if>
+      <if test="dPrincipal != null">
+        #{dPrincipal,jdbcType=VARCHAR},
+      </if>
+      <if test="dTel != null">
+        #{dTel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.springboot.entity.Dept">
+    update t_dept
+    <set>
+      <if test="dName != null">
+        d_name = #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dParent != null">
+        d_parent = #{dParent,jdbcType=VARCHAR},
+      </if>
+      <if test="dCondition != null">
+        d_condition = #{dCondition,jdbcType=INTEGER},
+      </if>
+      <if test="dNote != null">
+        d_note = #{dNote,jdbcType=VARCHAR},
+      </if>
+      <if test="dPrincipal != null">
+        d_principal = #{dPrincipal,jdbcType=VARCHAR},
+      </if>
+      <if test="dTel != null">
+        d_tel = #{dTel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where d_no = #{dNo,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.springboot.entity.Dept">
+    update t_dept
+    set d_name = #{dName,jdbcType=VARCHAR},
+      d_parent = #{dParent,jdbcType=VARCHAR},
+      d_condition = #{dCondition,jdbcType=INTEGER},
+      d_note = #{dNote,jdbcType=VARCHAR},
+      d_principal = #{dPrincipal,jdbcType=VARCHAR},
+      d_tel = #{dTel,jdbcType=VARCHAR}
+    where d_no = #{dNo,jdbcType=INTEGER}
+  </update>
+</mapper>
