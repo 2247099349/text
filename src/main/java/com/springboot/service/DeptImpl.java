@@ -26,6 +26,7 @@ public class DeptImpl implements DeptService{
 
     @Override
     public void del(Integer[] arr) {
+        new Dept();
 deptMapper.del(arr);
     }
 }
